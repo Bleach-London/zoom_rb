@@ -35,7 +35,7 @@ module Zoom
         # TODO: Verify `password` attr, may only contain the following characters: a-z A-Z 0-9 @ - _
         # TODO: Handle `option_audio` attr, Can be "both", "telephony", "voip".
         # TODO: Handle `option_auto_record_type`, Can be "local", “cloud” or "none".
-        Utils.parse_response self.class.patch("/meetings/#{options[:meeting_id]}", body: options.except(:meeting_id), headers: request_headers)
+        Utils.parse_response self.class.patch("/meetings/#{options[:meeting_id]}", body: options.except(:meeting_id).to_json, headers: request_headers)
       end
 
       # Delete a meeting on Zoom, return the deleted meeting ID.
@@ -49,7 +49,7 @@ module Zoom
       def meeting_update_status(*args)
         options = Zoom::Params.new(Utils.extract_options!(args))
         options.require(%i[meeting_id])
-        Utils.parse_response self.class.put("/meetings/#{options[:meeting_id]}/status", body: options.except(:meeting_id), headers: request_headers)
+        Utils.parse_response self.class.put("/meetings/#{options[:meeting_id]}/status", body: options.except(:meeting_id).to_json, headers: request_headers)
       end
 
       # End a meeting on Zoom, return the deleted meeting ID.
@@ -68,7 +68,7 @@ module Zoom
       def meeting_register(*args)
         options = Zoom::Params.new(Utils.extract_options!(args))
         options.require(%i[meeting_id email first_name last_name])
-        Utils.parse_response self.class.post("/meetings/#{options[:meeting_id]}/registrants", body: options.except(:meeting_id), headers: request_headers)
+        Utils.parse_response self.class.post("/meetings/#{options[:meeting_id]}/registrants", body: options.except(:meeting_id).to_json, headers: request_headers)
       end
 
       # Retrieve ended meeting details
@@ -88,7 +88,7 @@ module Zoom
       def livestream(*args)
         options = Zoom::Params.new(Utils.extract_options!(args))
         options.require(%i[meeting_id stream_url stream_key]).permit(%i[page_url])
-        Utils.parse_response self.class.patch("/meetings/#{options[:meeting_id]}/livestream", body: options.except(:meeting_id), headers: request_headers)
+        Utils.parse_response self.class.patch("/meetings/#{options[:meeting_id]}/livestream", body: options.except(:meeting_id).to_json, headers: request_headers)
       end
     end
   end
