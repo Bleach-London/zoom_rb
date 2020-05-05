@@ -15,7 +15,7 @@ module Zoom
         options = Zoom::Params.new(Utils.extract_options!(args))
         options.require(%i[user_id])
         Utils.process_datetime_params!(:start_time, options)
-        Utils.parse_response self.class.post("/users/#{options[:user_id]}/meetings", body: options.except(:user_id), headers: request_headers)
+        Utils.parse_response self.class.post("/users/#{options[:user_id]}/meetings", body: options.except(:user_id).to_json, headers: request_headers)
       end
 
       # Get a meeting on Zoom via meeting ID, return the meeting info.
