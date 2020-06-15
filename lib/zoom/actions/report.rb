@@ -16,9 +16,9 @@ module Zoom
       end
 
       def meetings_report(*args)
-        # TODO: implement meetings_report
-        # params = Zoom::Params.new(Utils.extract_options!(args))
-        raise Zoom::NotImplemented, 'meetings_report is not yet implemented'
+        options = Zoom::Params.new(Utils.extract_options!(args))
+        options.require(%i[meeting_id])
+        Utils.parse_response self.class.get("/report/meetings/#{options[:meeting_id]}", headers: request_headers)
       end
 
       def meeting_details_report(*args)
